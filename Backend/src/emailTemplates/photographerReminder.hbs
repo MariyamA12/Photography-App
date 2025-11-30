@@ -1,0 +1,38 @@
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;border:1px solid #eaeaea;border-radius:8px;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+  <!-- Header Section -->
+  <div style="background: linear-gradient(135deg, #e59b85, #d48879); padding:20px; text-align:center; color:#fff;">
+    <img src="cid:logo" alt="Photography Assignment Logo" style="max-height:80px; margin-bottom:10px;"/>
+    <h1 style="margin:5px 0; font-size:28px;">📸 Photographer Assignment</h1>
+  </div>
+
+  <!-- Main Content -->
+  <div style="padding:20px; color:#333; line-height:1.6;">
+    <p>Hi <strong>{{photographerName}}</strong>,</p>
+    <p>You’ve been assigned to capture <strong>{{event.name}}</strong> on <strong>{{event.dateFormatted}}</strong> at <strong>{{event.schoolName}}</strong>. Below are the key details:</p>
+
+    <!-- Info Table -->
+    <table style="width:100%; border-collapse:collapse; margin:20px 0;">
+      <tr>
+        <td style="padding:8px; font-weight:bold; width:30%; background:#f0f0f0;">Event Name:</td>
+        <td style="padding:8px;">{{event.name}}</td>
+      </tr>
+      <tr>
+        <td style="padding:8px; font-weight:bold; background:#f9f9f9;">Date:</td>
+        <td style="padding:8px;">{{event.dateFormatted}}</td>
+      </tr>
+      <tr>
+        <td style="padding:8px; font-weight:bold; background:#f0f0f0;">Location:</td>
+        <td style="padding:8px;">{{event.schoolName}}</td>
+      </tr>
+    </table>
+
+    <p>We’ll also send you a friendly reminder <strong>one week before</strong> the session to ensure you’re all set.</p>
+    <p>If you have any questions or need additional support, just reply to this email or reach out via the app.</p>
+    <p>Cheers,<br/>The Roz&amp;Kirsty Team</p>
+  </div>
+
+  <!-- Footer -->
+  <div style="background:#f5f5f5; padding:15px; text-align:center; font-size:12px; color:#777;">
+    <p>© 2025 Roz&amp;Kirsty Photography — Empowering your lens</p>
+  </div>
+</div>

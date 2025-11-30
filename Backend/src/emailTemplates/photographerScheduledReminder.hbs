@@ -1,0 +1,39 @@
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;border:1px solid #eaeaea;border-radius:8px;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+  <!-- Header Section -->
+  <div style="background: linear-gradient(135deg, #e59b85, #d48879); padding:20px; text-align:center; color:#fff;">
+    <img src="cid:logo" alt="Session Sync Logo" style="max-height:80px; margin-bottom:10px;"/>
+    <h1 style="margin:5px 0; font-size:28px;">🔄 Session Sync Reminder</h1>
+  </div>
+
+  <!-- Main Content -->
+  <div style="padding:20px; color:#333; line-height:1.6;">
+    <p>Hi <strong>{{photographerName}}</strong>,</p>
+    <p>This is a quick reminder to <strong>sync all event details</strong> in the mobile app before your upcoming session:</p>
+
+    <!-- Info Table -->
+    <table style="width:100%; border-collapse:collapse; margin:20px 0;">
+      <tr>
+        <td style="padding:8px; font-weight:bold; width:30%; background:#f0f0f0;">Event Name:</td>
+        <td style="padding:8px;">{{event.name}}</td>
+      </tr>
+      <tr>
+        <td style="padding:8px; font-weight:bold; background:#f9f9f9;">Date:</td>
+        <td style="padding:8px;">{{event.dateFormatted}}</td>
+      </tr>
+      <tr>
+        <td style="padding:8px; font-weight:bold; background:#f0f0f0;">Location:</td>
+        <td style="padding:8px;">{{event.schoolName}}</td>
+      </tr>
+    </table>
+
+    <p>Please ensure your preferences, equipment checklist, and any special instructions are up to date in the app.</p>
+    <p>We’ll send a final confirmation <strong>one day before</strong> the session to make sure everything’s set.</p>
+    <p>If you have any questions or need assistance, reply to this email or message us in the app.</p>
+    <p>Cheers,<br/>The Roz&amp;Kirsty Team</p>
+  </div>
+
+  <!-- Footer -->
+  <div style="background:#f5f5f5; padding:15px; text-align:center; font-size:12px; color:#777;">
+    <p>© 2025 Roz&amp;Kirsty Photography — Sync up, shoot on!</p>
+  </div>
+</div>

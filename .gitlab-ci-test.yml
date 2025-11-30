@@ -1,0 +1,34 @@
+# Simplified GitLab CI/CD Pipeline for Backend Tests Only
+# This pipeline focuses solely on running test cases using npm run test:mock
+
+stages:
+  - test
+
+variables:
+  NODE_VERSION: "18"
+
+# Test stage - runs the test cases
+test:
+  stage: test
+  image: node:$NODE_VERSION
+  tags:
+    - general-docker
+  before_script:
+    - echo "Setting up Node.js $NODE_VERSION environment"
+    - node --version
+    - npm --version
+    - cd Backend
+    - npm ci
+  script:
+    - echo "Running test cases with npm run test:mock"
+    - npm run test:mock
+  after_script:
+    - echo "Test stage completed"
+  artifacts:
+    paths:
+      - Backend/coverage/
+    expire_in: 1 week
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG

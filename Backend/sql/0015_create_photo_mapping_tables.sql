@@ -1,0 +1,24 @@
+-- -- photos table
+-- CREATE TABLE photos (
+--   id SERIAL PRIMARY KEY,
+--   event_id INTEGER NOT NULL REFERENCES events(id) ON DELETE CASCADE,
+--   photo_session_id INTEGER REFERENCES photo_sessions(id) ON DELETE SET NULL,
+--   file_name TEXT NOT NULL,
+--   file_url TEXT NOT NULL,
+--   photo_type VARCHAR(20) NOT NULL CHECK (
+--     photo_type IN ('individual','with_sibling','with_friend','group')
+--   ),
+--   added_by INTEGER NOT NULL REFERENCES users(id) ON DELETE SET NULL,
+--   added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--   UNIQUE(event_id, file_name)
+-- );
+
+-- -- student mapping
+-- CREATE TABLE photo_students (
+--   photo_id INTEGER NOT NULL REFERENCES photos(id) ON DELETE CASCADE,
+--   student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+--   PRIMARY KEY (photo_id, student_id)
+-- );
+
+-- CREATE INDEX ON photo_students(student_id);
+-- CREATE INDEX ON photo_students(photo_id);

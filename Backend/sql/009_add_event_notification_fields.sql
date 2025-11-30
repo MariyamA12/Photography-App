@@ -1,0 +1,9 @@
+-- ALTER TABLE events
+--   ADD COLUMN notify_photographer_button_sent    BOOLEAN NOT NULL DEFAULT FALSE,
+--   ADD COLUMN notify_photographer_button_sent_at TIMESTAMP,
+--   ADD COLUMN notify_photographer_job_sent       BOOLEAN NOT NULL DEFAULT FALSE,
+--   ADD COLUMN notify_photographer_job_sent_at    TIMESTAMP,
+--   ADD COLUMN notify_parents_button_sent         BOOLEAN NOT NULL DEFAULT FALSE,
+--   ADD COLUMN notify_parents_button_sent_at      TIMESTAMP,
+--   ADD COLUMN notify_parents_job_sent            BOOLEAN NOT NULL DEFAULT FALSE,
+--   ADD COLUMN notify_parents_job_sent_at         TIMESTAMP;

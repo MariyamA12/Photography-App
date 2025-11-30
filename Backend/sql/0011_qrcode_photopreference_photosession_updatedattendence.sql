@@ -1,0 +1,60 @@
+-- -- ====================================
+-- -- create_photo_preferences_table.sql
+-- -- ====================================
+-- CREATE TABLE IF NOT EXISTS photo_preferences (
+--   id SERIAL PRIMARY KEY,
+--   event_id INTEGER NOT NULL REFERENCES events(id) ON DELETE CASCADE,
+--   parent_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+--   student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+--   preference_type VARCHAR(50) NOT NULL CHECK (
+--     preference_type IN ('individual', 'with_sibling', 'with_friend', 'group')
+--   ),
+--   extra_student_ids INTEGER[],
+--   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );
+
+-- -- ====================================
+-- -- create_qrcodes_table.sql
+-- -- ====================================
+-- CREATE TABLE IF NOT EXISTS qrcodes (
+--   id SERIAL PRIMARY KEY,
+--   event_id INTEGER NOT NULL REFERENCES events(id) ON DELETE CASCADE,
+--   preference_id INTEGER REFERENCES photo_preferences(id) ON DELETE SET NULL,
+--   code TEXT UNIQUE NOT NULL,
+--   photo_type VARCHAR(50) NOT NULL CHECK (
+--     photo_type IN ('individual', 'with_sibling', 'with_friend', 'group')
+--   ),
+--   image_url TEXT,
+--   is_scanned BOOLEAN DEFAULT FALSE,
+--   scanned_at TIMESTAMP,
+--   scanned_by INTEGER REFERENCES users(id) ON DELETE SET NULL,
+--   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );
+
+-- -- ====================================
+-- -- create_photo_sessions_table.sql
+-- -- ====================================
+-- CREATE TABLE IF NOT EXISTS photo_sessions (
+--   id SERIAL PRIMARY KEY,
+--   event_id INTEGER NOT NULL REFERENCES events(id) ON DELETE CASCADE,
+--   qrcode_id INTEGER REFERENCES qrcodes(id) ON DELETE SET NULL,
+--   photographer_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+--   photo_type VARCHAR(50) NOT NULL CHECK (
+--     photo_type IN ('individual', 'with_sibling', 'with_friend', 'group')
+--   ),
+--   student_ids INTEGER[] NOT NULL,
+--   temp_photo_name TEXT,
+--   photo_url TEXT,
+--   uploaded BOOLEAN DEFAULT FALSE,
+--   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );
+
+-- -- ====================================
+-- -- alter_attendance_table.sql
+-- -- ====================================
+-- ALTER TABLE attendance
+--   ADD COLUMN photo_session_id INTEGER REFERENCES photo_sessions(id) ON DELETE SET NULL,
+--   ADD COLUMN qrcode_id INTEGER REFERENCES qrcodes(id) ON DELETE SET NULL,
+--   ADD COLUMN photo_type VARCHAR(50) CHECK (
+--     photo_type IN ('individual', 'group', 'with_sibling', 'with_friend')
+--   );

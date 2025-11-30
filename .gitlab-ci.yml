@@ -1,0 +1,88 @@
+# You can override the included template(s) by including variable overrides
+# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Secret Detection customization: https://docs.gitlab.com/user/application_security/secret_detection/pipeline/configure
+# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
+# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
+# Note that environment variables can be set in several places
+# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+stages:
+- test
+- build
+variables:
+  NODE_VERSION: '18'
+  NPM_CACHE_KEY: "$CI_COMMIT_REF_SLUG-$CI_PROJECT_PATH"
+cache:
+  key: "$NPM_CACHE_KEY"
+  paths:
+  - Backend/node_modules/
+  - Backend/.npm/
+test:
+  stage: test
+  image: node:$NODE_VERSION
+  tags:
+  - general-docker
+  before_script:
+  - echo "Setting up Node.js $NODE_VERSION environment"
+  - node --version
+  - npm --version
+  - cd Backend
+  - npm ci --cache .npm --prefer-offline
+  script:
+  - echo "Running test cases with npm run test:mock"
+  - npm run test:mock
+  after_script:
+  - echo "Test stage completed"
+  artifacts:
+    reports:
+      junit: Backend/test-results.xml
+    paths:
+    - Backend/coverage/
+    - Backend/test-results.xml
+    expire_in: 1 week
+  coverage: "/All files[^|]*\\|[^|]*\\|[^|]*\\|[^|]*\\s+(\\d+)/"
+  rules:
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+  - if: "$CI_COMMIT_TAG"
+build:
+  stage: build
+  image: node:$NODE_VERSION
+  tags:
+  - general-docker
+  before_script:
+  - echo "Setting up build environment"
+  - node --version
+  - npm --version
+  - cd Backend
+  - npm ci --cache .npm --prefer-offline --only=production
+  script:
+  - echo "Creating production build"
+  - npm run build
+  artifacts:
+    paths:
+    - Backend/dist/
+    - Backend/build/
+    expire_in: 1 month
+  rules:
+  - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+  - if: "$CI_COMMIT_TAG"
+  when: manual
+security_scan:
+  stage: test
+  image: node:$NODE_VERSION
+  tags:
+  - general-docker
+  before_script:
+  - cd Backend
+  - npm ci --cache .npm --prefer-offline
+  script:
+  - echo "Running security audit"
+  - npm audit --audit-level=moderate
+  allow_failure: true
+  rules:
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+sast:
+  stage: test
+include:
+- template: Security/SAST.gitlab-ci.yml
